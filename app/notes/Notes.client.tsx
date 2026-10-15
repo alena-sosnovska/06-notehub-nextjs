@@ -12,7 +12,7 @@ import { fetchNotes } from '../../lib/api';
 import css from './page.module.css';
 import Loader from '../loading';
 import ErrorMessage from './error';
-
+import { error } from 'console';
 
 export default function NotesClient() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,8 +28,7 @@ export default function NotesClient() {
       queryKey: ['notes', searchText, page],
       queryFn: () => fetchNotes(searchText, page, perPage),
       placeholderData: keepPreviousData,
-      },
-    );
+    });
   };
 
   const handleSearch = useDebouncedCallback((searchText: string) => {
@@ -37,7 +36,7 @@ export default function NotesClient() {
     setPage(1);
   }, 300);
 
-  const { data, isLoading, isError } = useGetNotes(inputValue, page);
+  const { data, isLoading, isError, error } = useGetNotes(inputValue, page);
   const notes = data?.notes ?? [];
   const totalPages = data?.totalPages ?? 0;
 
@@ -57,7 +56,7 @@ export default function NotesClient() {
         </button>
       </header>
       {isLoading && <Loader />}
-      {isError && <ErrorMessage />}
+      {isError && <ErrorMessage error={error} />}
       {notes && notes.length > 0 && <NoteList notes={notes} />}
       {isModalOpen && (
         <Modal onClose={closeModal}>
