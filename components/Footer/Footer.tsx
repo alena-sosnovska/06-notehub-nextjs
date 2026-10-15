@@ -1,18 +1,12 @@
-'use client';
-import { useEffect, useState } from 'react';
+// 'use client';
 import css from './Footer.module.css';
 
+// interface FooterProps {
+//   currentYear: number;
+// }
+
 export default function Footer() {
-  const [currentYear, setCurrentYear] = useState<number | null>(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurrentYear(new Date().getFullYear());
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, []);
-
+  const currentYear = new Date().getFullYear();
   return (
     <footer className={css.footer}>
       <div className={css.content}>
@@ -21,7 +15,7 @@ export default function Footer() {
           <p>Developer: your name</p>
           <p>
             Contact us:
-            <a href="mailto:student@notehub.app">student@notehub.app</a>
+            <a href="<mailto:student@notehub.app>">student@notehub.app</a>
           </p>
         </div>
       </div>
