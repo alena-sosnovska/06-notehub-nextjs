@@ -6,7 +6,7 @@ import Loader from '../loading';
 
 async function NotesPage() {
   const queryClient = new QueryClient();
-  await queryClient.fetchQuery({
+  await queryClient.prefetchQuery({
     queryKey: ['notes', '', 1],
     queryFn: () => fetchNotes('', 1, 12),
   });
