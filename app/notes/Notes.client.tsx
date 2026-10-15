@@ -12,32 +12,24 @@ import { fetchNotes } from '../../lib/api';
 import css from './page.module.css';
 import Loader from '../loading';
 import ErrorMessage from './error';
-import { Note } from '@/types/note';
 
-export interface NotesClientProps {
-  initialNotes: Note[];
-  initialTotalPages: number;
-}
 
-export default function NotesClient({ initialNotes, initialTotalPages }: NotesClientProps) {
+export default function NotesClient() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const [inputValue, setInputValue] = useState('');
   const [page, setPage] = useState(1);
-  const perPage = 10;
+  const perPage = 12;
 
   const useGetNotes = (searchText: string, page: number) => {
     return useQuery({
       queryKey: ['notes', searchText, page],
       queryFn: () => fetchNotes(searchText, page, perPage),
       placeholderData: keepPreviousData,
-      initialData: {
-        notes: initialNotes,
-        totalPages: initialTotalPages,
       },
-    });
+    );
   };
 
   const handleSearch = useDebouncedCallback((searchText: string) => {

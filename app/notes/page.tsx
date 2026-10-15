@@ -1,17 +1,20 @@
 import NotesClient from './Notes.client';
 import { fetchNotes } from '../../lib/api';
-import { connection } from 'next/server';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import Loader from '../loading';
 
-// export const dynamic = 'force-dynamic';
-
 async function NotesPage() {
-  await connection();
-  const initialData = await fetchNotes('', 1, 10);
+  const queryClient = new QueryClient();
+  await queryClient.fetchQuery({
+    queryKey: ['notes', '', 1],
+    queryFn: () => fetchNotes('', 1, 12),
+  });
 
   return (
-    <NotesClient initialNotes={initialData.notes} initialTotalPages={initialData.totalPages} />
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <NotesClient />
+    </HydrationBoundary>
   );
 }
 
