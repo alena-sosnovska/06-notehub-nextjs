@@ -1,16 +1,19 @@
 // 'use client';
+import CurrentYear from '../CurrentYear/CurrentYear';
 import css from './Footer.module.css';
-
-// interface FooterProps {
-//   currentYear: number;
-// }
+import { Suspense } from 'react';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
   return (
     <footer className={css.footer}>
       <div className={css.content}>
-        <p>© {currentYear} NoteHub. All rights reserved.</p>
+        <p>
+          ©{' '}
+          <Suspense fallback={null}>
+            <CurrentYear />
+          </Suspense>{' '}
+          NoteHub. All rights reserved.
+        </p>
         <div className={css.wrap}>
           <p>Developer: your name</p>
           <p>
