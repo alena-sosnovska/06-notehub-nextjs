@@ -8,9 +8,9 @@ import Modal from '../../components/Modal/Modal';
 import NoteForm from '../../components/NoteForm/NoteForm';
 import Pagination from '../../components/Pagination/Pagination';
 import SearchBox from '../../components/SearchBox/SearchBox';
-import { fetchNotes } from '../../lib/api/api';
+import { fetchNotes } from '../../lib/api';
 import css from './page.module.css';
-import Loader from '../loader';
+import Loader from '../loading';
 import ErrorMessage from './error';
 import { Note } from '@/types/note';
 
@@ -32,7 +32,7 @@ export default function NotesClient({ initialNotes, initialTotalPages }: NotesCl
     return useQuery({
       queryKey: ['notes', searchText, page],
       queryFn: () => fetchNotes(searchText, page, perPage),
-        placeholderData: keepPreviousData,
+      placeholderData: keepPreviousData,
       initialData: {
         notes: initialNotes,
         totalPages: initialTotalPages,
